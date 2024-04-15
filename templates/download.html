@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>VividArt Studios - Photography</title>
+    <meta content="" name="description">
+    <meta content="" name="author">
+    <meta content="" name="keywords">
+    <meta content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <style>
+        /* Inline CSS styles */
+        .button-container {
+            margin-top: 10px;
+        }
+
+        .button-container input[type="submit"],
+        .button-container a.btn {
+            width: 100%; /* Change width to 100% for both buttons */
+        }
+
+        #processing-completed-message {
+            margin-top: 20px;
+            border: 2px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        #processing-completed-message p {
+            margin: 0;
+            padding: 5px 0;
+        }
+
+        #processing-completed-message strong {
+            font-weight: bold;
+        }
+
+        #presigned-url {
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div id="processing-completed-message">
+        <p><strong>File Processing Completed!</strong></p>
+        <p>Filename: <span id="filename">{{ filename }}</span></p>
+        
+        <hr>
+        <p>Your file is ready for download. Click the button below to download it.</p>
+        <!-- Update the href attribute with the presigned URL -->
+        <a id="download-link" href="{{ presigned_url }}" download><button>Download File</button></a>
+        <p>Want to upload another file?</p>
+        <a href="/"><button>Upload Another File</button></a>
+    </div>
+
+    <script>
+        // Function to display processing completion message
+        function displayProcessingCompletionMessage(filename, presigned_url) {
+            const messageContainer = document.getElementById('processing-completed-message');
+            const filenameContainer = document.getElementById('filename');
+            const presignedUrlContainer = document.getElementById('presigned-url');
+            const downloadButton = document.getElementById('download-button');
+    
+            filenameContainer.textContent = filename;
+            presignedUrlContainer.textContent = presigned_url;
+            presignedUrlContainer.href = presigned_url;
+            downloadButton.href = presigned_url; // Assign the presigned URL to the download button
+            messageContainer.style.display = 'block';
+        }
+    
+        // Example usage:
+        const filename = "{{ filename }}";
+        const presigned_url = "{{ presigned_url }}";
+        displayProcessingCompletionMessage(filename, presigned_url);
+    
+        // Function to handle download button click
+        document.getElementById('download-button').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default action of clicking a link
+            const presigned_url = this.href;
+            const filename = presigned_url.split('/').pop(); // Extract the filename from the presigned URL
+            const link = document.createElement('a');
+            link.setAttribute('href', presigned_url);
+            link.setAttribute('download', filename);
+            document.body.appendChild(link);
+            link.click(); // Simulate click on the dynamically created link
+            document.body.removeChild(link); // Clean up
+        });
+    </script>
+
+    
+</body>
+</html>
