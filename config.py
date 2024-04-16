@@ -8,8 +8,8 @@ class Config(object):
     BUCKET_NAME = 'source-photo'
     SNS_TOPIC_ARN = "arn:aws:sns:us-east-1:351528229736:photo_processing_complete"
     AWS_DEFAULT_REGION="us-east-1"
-    AWS_ACCESS_KEY_ID = 'AKIAVDWFXDNUIMGQOVTU'
-    AWS_SECRET_ACCESS_KEY = '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'
+    AWS_ACCESS_KEY_ID = ''
+    AWS_SECRET_ACCESS_KEY = ''
     
 
 
